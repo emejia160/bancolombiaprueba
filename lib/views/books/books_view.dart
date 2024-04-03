@@ -3,6 +3,7 @@ import 'package:buscador_prueba_bancolombia/views/book_detail/book_detail.dart';
 import 'package:buscador_prueba_bancolombia/views/books/books_delegate.dart';
 import 'package:buscador_prueba_bancolombia/views/books/books_presenter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class BooksView extends StatefulWidget {
    static String routeName = "/BookDetail";
@@ -23,7 +24,7 @@ class BooksViewState extends State<BooksView> implements BooksDelegate{
   @override
   void initState() {
     super.initState();
-    booksPresenter.loadBooks(1);
+    booksPresenter.loadBooks(1, "");
     _books = <Book>[];
    
   }
@@ -35,8 +36,22 @@ class BooksViewState extends State<BooksView> implements BooksDelegate{
   @override
   Widget build(BuildContext context) {
      print("build list");
-    //return setupBooksListViewWidget(context);
-    return setupListItemCard(context);
+    return setupBooksView(context);
+  }
+
+  Widget setupBooksView(BuildContext context) {
+      return Scaffold(
+        body: ListView(
+      children: <Widget>[
+        TextField(
+  onChanged: (text) {
+    booksPresenter.loadBooks(1, text);
+  },
+  decoration: InputDecoration(hintText: 'Ingrese el nombre del libro a buscar:'),
+),
+        setupListItemCard(context),
+      ],
+    ));
   }
 
   Card setupListItemCard(BuildContext context) {
@@ -78,6 +93,7 @@ class BooksViewState extends State<BooksView> implements BooksDelegate{
   @override
   void onBooksRecieved(List<Book> books) {
       print('books recieved');
+      _books.clear();
        if (books.length > 0) {
         _books.addAll(books);
        }

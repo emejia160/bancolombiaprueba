@@ -8,7 +8,7 @@ import 'package:buscador_prueba_bancolombia/service/network_service.dart';
 import 'package:http/http.dart' as http;
 
 abstract class BooksRepository {
-   Future<List<Book>> fetchBooks(int page);
+   Future<List<Book>> fetchBooks(int page, String name);
 }
 
 class BooksRepositoryImpl implements BooksRepository{
@@ -16,9 +16,9 @@ class BooksRepositoryImpl implements BooksRepository{
   final JsonDecoder _decoder = new JsonDecoder();
 
   @override
-  Future<List<Book>> fetchBooks(int page) async {
+  Future<List<Book>> fetchBooks(int page, String name) async {
    print('books request start');
-    final response = await http.get(Uri.parse(ApiEndPoint.BOOKS));
+    final response = await http.get(Uri.parse(ApiEndPoint.BOOKS + name));
     var statusCode = response.statusCode;
     var jsonBody = response.body;
 

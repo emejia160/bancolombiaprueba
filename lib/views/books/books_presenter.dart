@@ -10,10 +10,10 @@ class BooksPresenter {
     booksRepository = Injector().booksRepository;
   }
 
-  Future<void> loadBooks(int page) async {
+  Future<void> loadBooks(int page, String name) async {
 print('books response presenter');
     booksRepository
-        .fetchBooks(page)
+        .fetchBooks(page, name)
         .then((contacts) => _view.onBooksRecieved(contacts))
         .catchError((onError) {
       print(onError);
