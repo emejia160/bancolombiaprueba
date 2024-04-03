@@ -19,7 +19,7 @@ class NetworkService {
   }
 
   String getErrorMessage(dynamic exception) {
-    String errorMessage = "";
+    String errorMessage = "Error en el servicio";
    if (exception is HttpException) {
       errorMessage = exception.message;
    }
