@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 
 abstract class BooksRepository {
    Future<List<Book>> fetchBooks(int page, String name);
+   Future<Book> fetchBookDetail(String isbn);
 }
 
 class BooksRepositoryImpl implements BooksRepository{
@@ -33,6 +34,25 @@ class BooksRepositoryImpl implements BooksRepository{
   print('books request response');
   
     return books.map((book) => Book.fromJson(book)).toList();
+  }
+
+  @override
+  Future<Book> fetchBookDetail(String isbn) async {
+    final response = await http.get(Uri.parse(ApiEndPoint.BOOK_DETAIL + isbn));
+    var statusCode = response.statusCode;
+    var jsonBody = response.body;
+
+    /*if (statusCode != 200 || null == statusCode) {
+      throw new RequestException(
+          "Cannnot fecth data, code: $statusCode, ${response.reasonPhrase}");
+    }*/
+
+    final body = _decoder.convert(jsonBody);
+    
+
+  print('books request response');
+  
+    return  Book.fromJson(body);
   }
 
   

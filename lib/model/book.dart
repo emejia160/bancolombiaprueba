@@ -1,19 +1,29 @@
 class Book {
-  late String title;
-  late String subtitle;
-  late String isbn13;
-  late String price;
-  late String image;
-  late String url;
+  late String? title;
+  late String? subtitle;
+  late String? isbn13;
+  late String? price;
+  late String? image;
+  late String? url;
+  late String? authors;
+  late String? publisher;
+  late String? language;
+  late String? year;
+  late String? description;
   
 
   Book({
-    required this.title,
-    required this.subtitle,
-    required this.isbn13,
-    required this.price,
-    required this.image,
-    required this.url
+     this.title,
+     this.subtitle,
+     this.isbn13,
+     this.price,
+     this.image,
+     this.url,
+     this.authors,
+     this.publisher,
+     this.language,
+     this.year,
+     this.description
   });
 
   Book.fromJson(Map<String, dynamic> json) {
@@ -23,5 +33,11 @@ class Book {
     price = json['price'];
     image = json['image'];
     url = json['url'];
+    authors = json['authors'];
+    publisher = json['publisher'];
+    language = json['language'];
+    year = json['year'];
+    description = json['desc'];
   }
+  
 }

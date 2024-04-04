@@ -18,8 +18,6 @@ class BooksViewState extends State<BooksView> implements BooksDelegate{
   late BooksPresenter booksPresenter;
   late List<Book> _books;
   bool _isLoading = false;
-  bool _isRefreshing = false;
-  bool _isLoadMore = false;
   
   @override
   void initState() {
@@ -35,7 +33,6 @@ class BooksViewState extends State<BooksView> implements BooksDelegate{
   } 
   @override
   Widget build(BuildContext context) {
-     print("build list");
     return setupBooksView(context);
   }
 
@@ -77,11 +74,9 @@ class BooksViewState extends State<BooksView> implements BooksDelegate{
   }
 
   BookItem buiildBookItem(int index, BuildContext context) {
-    print("build item book");
     return BookItem(
       book: _books[index],
       onTap: () {
-        print("Item clicked: ${_books[index].title}");
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => BooksDetailView(_books[index])));
       },
@@ -92,7 +87,6 @@ class BooksViewState extends State<BooksView> implements BooksDelegate{
 
   @override
   void onBooksRecieved(List<Book> books) {
-      print('books recieved');
       _books.clear();
        if (books.length > 0) {
         _books.addAll(books);
@@ -108,14 +102,14 @@ class BooksViewState extends State<BooksView> implements BooksDelegate{
 class BookItem extends ListTile {
   BookItem({required Book book, required GestureTapCallback onTap, required BuildContext context})
       : super(
-            title: new Text(book.title),
-            subtitle: new Text(book.subtitle),
+            title: Text(book.title ?? ""),
+            subtitle: Text(book.subtitle ?? ""),
             leading: Container(
                 width: 60.0,
                 height: 60.0,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: NetworkImage(book.image),
+                      image: NetworkImage(book.image ?? ""),
                       fit: BoxFit.cover),
                   borderRadius: BorderRadius.all(new Radius.circular(50.0)),
                   border: Border.all(
