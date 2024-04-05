@@ -1,5 +1,3 @@
-import 'dart:convert';
-import 'dart:typed_data';
 
 import 'package:buscador_prueba_bancolombia/di/injection.dart';
 import 'package:buscador_prueba_bancolombia/repository/books_repository.dart';
@@ -29,26 +27,16 @@ class BooksPresenter {
   Future<void> loadLastestSearch() async {
    
     final list = SharedPreferenceUtils.getStringList(_keyData);
-    if (list != null) {
-      _view.onLastestSearch(list as List<String>);
-    } else {
-      _view.onLastestSearch([]);
-    }
-    
+    _view.onLastestSearch(list as List<String>);
+      
   }
 
   Future<void> saveSearch(String text) async {
    final list = await SharedPreferenceUtils.getStringList(_keyData);
-    if (list != null) {
-      list.add(text);
-      SharedPreferenceUtils.putStringList(_keyData, list);
-      _view.onSearchSaved(list);
-    } else {
-     final list =  [text];
-     SharedPreferenceUtils.putStringList(_keyData, list);
-     _view.onSearchSaved(list);
-    }
-   
+    list.add(text);
+    SharedPreferenceUtils.putStringList(_keyData, list);
+    _view.onSearchSaved(list);
+     
 
   }
 }

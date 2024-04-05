@@ -4,7 +4,6 @@ import 'package:buscador_prueba_bancolombia/views/book_detail/book_detail.dart';
 import 'package:buscador_prueba_bancolombia/views/books/books_delegate.dart';
 import 'package:buscador_prueba_bancolombia/views/books/books_presenter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class BooksView extends StatefulWidget {
    static String routeName = "/BookDetail";

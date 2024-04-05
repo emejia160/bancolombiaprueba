@@ -1,7 +1,6 @@
 import 'package:buscador_prueba_bancolombia/di/injection.dart';
 import 'package:buscador_prueba_bancolombia/repository/books_repository.dart';
 import 'package:buscador_prueba_bancolombia/views/book_detail/book_detail_delegate.dart';
-import 'package:buscador_prueba_bancolombia/views/books/books_delegate.dart';
 
 class BookDetailPresenter {
   late BooksRepository booksRepository;
