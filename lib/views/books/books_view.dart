@@ -1,3 +1,4 @@
+import 'package:buscador_prueba_bancolombia/constants/strings.dart';
 import 'package:buscador_prueba_bancolombia/model/book.dart';
 import 'package:buscador_prueba_bancolombia/views/book_detail/book_detail.dart';
 import 'package:buscador_prueba_bancolombia/views/books/books_delegate.dart';
@@ -18,11 +19,14 @@ class BooksViewState extends State<BooksView> implements BooksDelegate{
   late BooksPresenter booksPresenter;
   late List<Book> _books;
   bool _isLoading = false;
+  String _searchText = "";
+  List<String> lastestSearch = [];
   
   @override
   void initState() {
     super.initState();
     booksPresenter.loadBooks(1, "");
+    booksPresenter.loadLastestSearch();
     _books = <Book>[];
    
   }
@@ -38,17 +42,55 @@ class BooksViewState extends State<BooksView> implements BooksDelegate{
 
   Widget setupBooksView(BuildContext context) {
       return Scaffold(
+       appBar: AppBar(
+        title: const Text(Strings.apBarText),
+      ),
         body: ListView(
       children: <Widget>[
         TextField(
   onChanged: (text) {
-    booksPresenter.loadBooks(1, text);
+    _searchText = text;
   },
-  decoration: InputDecoration(hintText: 'Ingrese el nombre del libro a buscar:'),
+  decoration: const InputDecoration(hintText: Strings.searchBookHint),
 ),
+   IconButton(
+                  icon: Icon(Icons.search),
+                  onPressed: (){
+                    booksPresenter.loadBooks(1, _searchText);
+                    booksPresenter.saveSearch(_searchText);
+                  }),
+        setupLastestSearchCard(context),
         setupListItemCard(context),
+     
       ],
     ));
+  }
+
+  Card setupLastestSearchCard(BuildContext context) {
+ return Card(
+      margin: EdgeInsets.all(10.0),
+      child: Column(
+        children: [
+          const ListTile(
+            title: Text("Búsquedas recientes:"),
+          ),
+          Divider(),
+          ListView.builder(
+            itemCount: lastestSearch.length,
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              final data = lastestSearch[index];
+                      return ListTile(
+                          title: Text(data),
+                          onTap: (){
+                              booksPresenter.loadBooks(1, data);
+                          });
+            },
+          ),
+        ],
+      ),
+    );
   }
 
   Card setupListItemCard(BuildContext context) {
@@ -56,8 +98,8 @@ class BooksViewState extends State<BooksView> implements BooksDelegate{
       margin: EdgeInsets.all(10.0),
       child: Column(
         children: [
-          ListTile(
-            title: Text('Libros encontrados: '),
+          const ListTile(
+            title: Text(Strings.booksFound),
           ),
           Divider(),
           ListView.builder(
@@ -88,8 +130,29 @@ class BooksViewState extends State<BooksView> implements BooksDelegate{
   @override
   void onBooksRecieved(List<Book> books) {
       _books.clear();
-       if (books.length > 0) {
+       if (books.isNotEmpty) {
         _books.addAll(books);
+       }
+       setState(() {
+        _isLoading = false;
+       });
+  }
+  
+  @override
+  void onLastestSearch(List<String> list) {
+     if (list.isNotEmpty) {
+        lastestSearch.addAll(list);
+       }
+       setState(() {
+        _isLoading = false;
+       });
+  }
+  
+  @override
+  void onSearchSaved(List<String> list) {
+    lastestSearch.clear();
+     if (list.isNotEmpty) {
+        lastestSearch.addAll(list);
        }
        setState(() {
         _isLoading = false;

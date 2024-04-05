@@ -2,20 +2,17 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart' as http show Client;
 import 'package:http/http.dart';
 
 class NetworkService {
+  Client client = Client();
   Future<Response> get(String apiUrl) async {
-    return http.get(apiUrl as Uri);
+    return client.get(apiUrl as Uri);
   }
 
   Future<Response> post(String _apiBaseUrl, dynamic data) {
-    return http.post(_apiBaseUrl as Uri, body: data);
-  }
-
-  Map<String, dynamic> convertJsonToMap(String response) {
-    return json.decode(response);
+    return client.post(_apiBaseUrl as Uri, body: data);
   }
 
   String getErrorMessage(dynamic exception) {

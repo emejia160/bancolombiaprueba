@@ -34,6 +34,9 @@ class BooksDetailState extends State<BooksDetailView> implements BookDetailDeleg
   @override
   Widget build(BuildContext context) {
    return Scaffold(
+    appBar: AppBar(
+        title: const Text(""),
+      ),
         body: ListView(
       children: <Widget>[
         Image.network(
@@ -72,7 +75,7 @@ class BooksDetailState extends State<BooksDetailView> implements BookDetailDeleg
                 ),
                 Text(
                   widget._book.authors ?? "",
-                  style: TextStyle(color: const Color.fromARGB(255, 131, 129, 129)),
+                  style: const TextStyle(color: Color.fromARGB(255, 131, 129, 129)),
                 ),
               ],
             ),
