@@ -17,7 +17,6 @@ class BooksView extends StatefulWidget {
 class BooksViewState extends State<BooksView> implements BooksDelegate{
   late BooksPresenter booksPresenter;
   late List<Book> _books;
-  bool _isLoading = false;
   String _searchText = "";
   List<String> lastestSearch = [];
   
@@ -133,7 +132,6 @@ class BooksViewState extends State<BooksView> implements BooksDelegate{
         _books.addAll(books);
        }
        setState(() {
-        _isLoading = false;
        });
   }
   
@@ -143,7 +141,6 @@ class BooksViewState extends State<BooksView> implements BooksDelegate{
         lastestSearch.addAll(list);
        }
        setState(() {
-        _isLoading = false;
        });
   }
   
@@ -154,7 +151,6 @@ class BooksViewState extends State<BooksView> implements BooksDelegate{
         lastestSearch.addAll(list);
        }
        setState(() {
-        _isLoading = false;
        });
   }
 

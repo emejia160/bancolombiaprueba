@@ -19,7 +19,6 @@ class BooksDetailView extends StatefulWidget {
 
 class BooksDetailState extends State<BooksDetailView> implements BookDetailDelegate {
   late BookDetailPresenter detailPresenter;
-  bool _isLoading = false;
 
   BooksDetailState(){
     detailPresenter = BookDetailPresenter(this);
@@ -102,7 +101,6 @@ class BooksDetailState extends State<BooksDetailView> implements BookDetailDeleg
   void onDetailRecieved(Book book) {
     widget._book = book;
     setState(() {
-        _isLoading = false;
        });
   }
 }

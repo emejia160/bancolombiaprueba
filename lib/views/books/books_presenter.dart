@@ -18,7 +18,7 @@ class BooksPresenter {
   Future<void> loadBooks(int page, String name) async {
     booksRepository
         .fetchBooks(page, name)
-        .then((contacts) => _view.onBooksRecieved(contacts))
+        .then((books) => _view.onBooksRecieved(books))
         .catchError((onError) {
       print(onError);
     });
@@ -26,8 +26,8 @@ class BooksPresenter {
 
   Future<void> loadLastestSearch() async {
    
-    final list = SharedPreferenceUtils.getStringList(_keyData);
-    _view.onLastestSearch(list as List<String>);
+    final list = await SharedPreferenceUtils.getStringList(_keyData);
+    _view.onLastestSearch(list);
       
   }
 

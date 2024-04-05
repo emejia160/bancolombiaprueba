@@ -1,4 +1,3 @@
-import 'package:buscador_prueba_bancolombia/views/book_detail/book_detail.dart';
 import 'package:buscador_prueba_bancolombia/views/books/books_view.dart';
 import 'package:buscador_prueba_bancolombia/views/splash/splash_view.dart';
 import 'package:flutter/material.dart';

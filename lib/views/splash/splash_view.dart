@@ -18,8 +18,8 @@ class SplashState extends State<Splash> {
   }
 
   splashTimeout() async {
-    var _duration = new Duration(seconds: 3);
-    return new Timer(_duration, navigationPage);
+    var _duration = const Duration(seconds: 3);
+    return Timer(_duration, navigationPage);
   }
 
   void navigationPage() async {
@@ -28,6 +28,6 @@ class SplashState extends State<Splash> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: new Center(child: FlutterLogo(size: 150.0)));
+    return const Scaffold(body: Center(child: FlutterLogo(size: 150.0)));
   }
 }
