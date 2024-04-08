@@ -19,13 +19,29 @@ class BooksViewState extends State<BooksView> implements BooksDelegate{
   late List<Book> _books;
   String _searchText = "";
   List<String> lastestSearch = [];
+  late ScrollController _scrollController;
+  int _page = 1;
+  bool _isLoading = false;
+  bool _isLoadMore = false;
+
+   void _scrollListener() {
+    print(_scrollController.position.extentAfter);
+    if (_scrollController.position.extentAfter == 0) {
+      setState(() {
+        _isLoadMore = true;
+      });
+      booksPresenter.loadBooks(++_page, _searchText);
+    }
+  }
+
   
   @override
   void initState() {
     super.initState();
-    booksPresenter.loadBooks(1, "");
+    _page = 1;
     booksPresenter.loadLastestSearch();
     _books = <Book>[];
+    _scrollController = ScrollController()..addListener(_scrollListener);
    
   }
   
@@ -74,6 +90,7 @@ class BooksViewState extends State<BooksView> implements BooksDelegate{
           ),
           Divider(),
           ListView.builder(
+            controller: _scrollController,
             itemCount: lastestSearch.length,
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
@@ -82,7 +99,7 @@ class BooksViewState extends State<BooksView> implements BooksDelegate{
                       return ListTile(
                           title: Text(data),
                           onTap: (){
-                              booksPresenter.loadBooks(1, data);
+                              booksPresenter.loadBooks(_page, data);
                           });
             },
           ),

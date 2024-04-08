@@ -15,6 +15,10 @@ class BooksRepositoryImpl implements BooksRepository{
 
   @override
   Future<List<Book>> fetchBooks(int page, String name) async {
+
+    if (name.isEmpty) {
+      return [];
+    }
     
     final response = await http.get(Uri.parse(ApiEndPoint.BOOKS + name));
     var jsonBody = response.body;
